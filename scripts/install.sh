@@ -25,7 +25,7 @@ else
     exit
 fi
 
-crontab_line="01 00 * * * $INSTALL_DIR/scripts/run_rita_ingest.sh"
+crontab_line="01 00 * * * $INSTALL_DIR/run_rita_ingest.sh"
 if (crontab -u root -l; echo "$crontab_line" ) | crontab -u root - ; then
     /usr/bin/printf "\xE2\x9C\x94 Added rita_ingest.sh to crontab.\n"
 else
