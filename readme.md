@@ -22,4 +22,4 @@ chmod +x install.sh
 ./install.sh
 ```
 
-Once the installer has completed modify the config file at /etc/upload-to-exabeam/config.ini
+Once the installer has completed modify the config file at `/etc/upload-to-exabeam/config.ini`
