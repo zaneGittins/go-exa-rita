@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 INSTALL_DIR=/opt/go-exa-rita
+CONFIG_DIR=/etc/upload-to-exabeam
 
 if mkdir -p $INSTALL_DIR ; then
     /usr/bin/printf "\xE2\x9C\x94 created install directory.\n"
@@ -9,11 +10,19 @@ else
     exit
 fi
 
-if wget https://github.com/zaneGittins/go-exa-rita/releases/download/v0.0.1/rita_ingest -P $INSTALL_DIR/ ; then
-    /usr/bin/printf "\xE2\x9C\x94 Downloaded rita ingest binary.\n"
+if wget https://github.com/zaneGittins/exapi/releases/download/v0.0.1/upload-to-exabeam -O /bin/upload-to-exabeam ; then
+    /usr/bin/printf "\xE2\x9C\x94 Downloaded upload-to-exabeam binary.\n"
     chmod +x $INSTALL_DIR/rita_ingest
 else
-    /usr/bin/printf "\xE2\x9D\x8C Failed to download ingest binary.\n"
+    /usr/bin/printf "\xE2\x9D\x8C Failed to upload-to-exabeam binary.\n"
+    exit
+fi
+
+if wget https://github.com/zaneGittins/exapi/releases/download/v0.0.1/config.ini -P $CONFIG_DIR/ ; then
+    /usr/bin/printf "\xE2\x9C\x94 Downloaded sample config.ini.\n"
+    chmod +x $INSTALL_DIR/rita_ingest
+else
+    /usr/bin/printf "\xE2\x9D\x8C Failed to download sample config.iniy.\n"
     exit
 fi
 

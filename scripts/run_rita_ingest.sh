@@ -19,21 +19,10 @@ else
     exit
 fi
 
- mkdir -p $EXA_RITA_DIR/rita-logs/
-
 # RITA show beacons
-if rita show-beacons $DB > $EXA_RITA_DIR/rita-logs/$OUTPUT_BEACONS ; then
-    sed -i '1d' $EXA_RITA_DIR/rita-logs/$OUTPUT_BEACONS
-    /usr/bin/printf "\xE2\x9C\x94 RITA show-beacons.\n"
+if rita show-beacons $DB | tail -n +2 | head -10 | cut -d "," -f 3 | /bin/upload-to-exabeam -config="/etc/upload-to-exabeam/config.ini" -table="rita_beacons"; then
+    /usr/bin/printf "\xE2\x9C\x94 RITA show-beacons uploaded to Exabeam.\n"
 else
     /usr/bin/printf "\xE2\x9D\x8C Failed to analyze beacons.\n"
-    exit
-fi
-
-# Ingest into rita_ingest
-if $EXA_RITA_DIR/rita_ingest -config="$EXA_RITA_DIR/config.ini" -beacon="$EXA_RITA_DIR/rita-logs/$OUTPUT_BEACONS" ; then
-    /usr/bin/printf "\xE2\x9C\x94 Ingested rita beacons and posted to context table.\n"
-else
-    /usr/bin/printf "\xE2\x9D\x8C Failed to post to context table API.\n"
     exit
 fi
